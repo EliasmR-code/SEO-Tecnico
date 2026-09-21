@@ -4,6 +4,9 @@
   "assets": {
     "directory": "./dist"
   },
+  "build": {
+    "command": "bun run build"
+  },
   "observability": {
     "enabled": true
   }
