@@ -34,21 +34,30 @@ const query = `
 `;
 
 const { layout } = await queryCMS(query, { locale, fallbackLocale });
+const pageTitle = 'Sobre SEO Técnico | Consultoría SEO en Colombia';
+const pageDescription = 'Conoce el enfoque de SEO Técnico para auditoría, arquitectura web, rendimiento y posicionamiento SEO en Colombia.';
+const canonicalUrl = new URL(`/${locale}/about`, Astro.site ?? 'https://seotecnico.co').toString();
 ---
 
-<Layout logos={[layout.logo, layout.logoDark]}>    
+<Layout
+  logos={[layout.logo, layout.logoDark]}
+  locale={locale}
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalUrl}
+>
   <section>
     <Heading index="01" text="About" />      
     <Line />
     <div class="p-8">
-      <h1 class="text-4xl mb-4">MultiLaunch: Multi-Brand Retail Template</h1>
-      <p class="text-base leading-7">A fast, clean template for retail companies with multiple brands. Built with <mark class="bg-gradient-to-r from-[#d83333] to-[#f041ff] bg-clip-text text-transparent">Astro</mark>'s high-performance framework and <mark class="bg-gradient-to-r from-[#ff593d] to-[#f4cf58] bg-clip-text text-transparent">DatoCMS</mark>'s flexible content management, MultiLaunch makes it easy to showcase different products across your brand portfolio. Each brand gets its own landing page with product info, features, and customer reviews—all in a consistent design that supports multiple languages out of the box. Brand pages can be easily customized with unique colors and themes directly from the CMS, allowing each brand to maintain its identity while staying within your corporate framework.</p>      
-      <h2 class="text-2xl mt-10 mb-4">Seamless Multilingual Support</h2>
-      <p class="text-base leading-7">Expand your reach globally with built-in language support. With DatoCMS's AI translator plugin, editors can translate entire layouts with just one click. No developer intervention required—simply select your target language and watch your content transform for international markets.</p>
-      <h2 class="text-2xl mt-10 mb-4">Rapid Brand Expansion</h2>
-      <p class="text-base leading-7">The multi-tenancy architecture allows you to create and deploy new brand pages in minutes, not days. Set up a complete brand presence with dedicated product showcases, customer testimonials, and brand-specific messaging—all without touching code. Perfect for growing retail corporations adding new brands to their portfolio.</p>
-      <h2 class="text-2xl mt-10 mb-4">Brand-Specific Customization</h2>
-      <p class="text-base leading-7">Empower your marketing team to maintain brand consistency while allowing for individual expression. Editors can easily adjust colors, fonts, and component variations directly from the CMS. Each brand maintains its unique identity while benefiting from the consistent underlying structure of your retail ecosystem.</p>
+      <h1 class="text-4xl mb-4">SEO técnico para negocios que quieren crecer</h1>
+      <p class="text-base leading-7">SEO Técnico combina análisis técnico, arquitectura web y estrategia de contenidos para ayudar a empresas en Colombia a ganar visibilidad orgánica. El trabajo parte de los datos: cómo rastrea Google tu web, qué páginas indexa, qué búsquedas tienen valor y qué mejoras pueden acercarte a más clientes.</p>
+      <h2 class="text-2xl mt-10 mb-4">Un enfoque basado en diagnóstico</h2>
+      <p class="text-base leading-7">Cada proyecto comienza con una auditoría SEO que revisa rastreo, indexación, enlazado interno, rendimiento, SEO on-page y datos estructurados. Después se ordenan las acciones por impacto, dificultad y relación con los objetivos comerciales.</p>
+      <h2 class="text-2xl mt-10 mb-4">SEO técnico, no solo palabras clave</h2>
+      <p class="text-base leading-7">Las keywords son una guía, pero el posicionamiento web necesita una arquitectura comprensible, contenidos útiles, experiencia móvil y una base técnica estable. Por eso el trabajo conecta Search Console, analítica, rendimiento y contenido.</p>
+      <h2 class="text-2xl mt-10 mb-4">SEO local en Colombia</h2>
+      <p class="text-base leading-7">La estrategia puede adaptarse a empresas que buscan clientes en Bogotá, Medellín u otras ciudades de Colombia, con páginas de servicio y señales locales relevantes, sin crear contenido duplicado ni forzar keywords.</p>
     </div>
   </section>      
 
