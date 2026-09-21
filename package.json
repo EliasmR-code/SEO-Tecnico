@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "deploy:cloudflare": "cd apps/core && wrangler deploy",
     "dev": "turbo run dev",
     "lint": "turbo run lint"
   },

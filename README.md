@@ -24,8 +24,11 @@ A high-performance Astro monorepo for technical SEO, SEO audits, web positioning
 
 ## Quick Start
 1. Create a Sanity project and configure its project ID and dataset.
-2. Set the Cloudflare Workers project root to `/` (the repository root).
-3. Use `bun run deploy:cloudflare` as the deploy command. This command changes into `apps/core` before running Wrangler.
+2. Configure Cloudflare Workers Builds with:
+   - **Root directory:** `apps/core`
+   - **Build command:** `bun run build`
+   - **Deploy command:** `npx wrangler versions upload`
+3. Keep the root directory set to `apps/core`; Wrangler must run there so it loads `apps/core/wrangler.jsonc`.
 
 ## Local Setup
 
@@ -68,8 +71,9 @@ bun run build
 # Preview production build
 bun run preview
 
-# Deploy the core site to Cloudflare Workers from the repository root
-bun run deploy:cloudflare
+# Deploy the core site to Cloudflare Workers
+# Run this from apps/core, as configured in Cloudflare Workers Builds
+npx wrangler versions upload
 ```
 
 ## Contributing
