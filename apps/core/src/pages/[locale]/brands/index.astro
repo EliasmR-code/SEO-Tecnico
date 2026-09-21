@@ -57,7 +57,14 @@ const { allBrands, home, layout } = await queryCMS(query, { locale, fallbackLoca
 
 ---
 
-<Layout additionalSeo={home._seoMetaTags} logos={[layout.logo, layout.logoDark]}>
+<Layout
+  additionalSeo={home._seoMetaTags}
+  logos={[layout.logo, layout.logoDark]}
+  locale={locale}
+  title="Servicios y recursos de SEO técnico en Colombia"
+  description="Explora recursos y páginas de SEO técnico, auditoría SEO, posicionamiento web y SEO local para empresas en Colombia."
+  canonical={new URL(`/${locale}/brands`, Astro.site ?? 'https://seotecnico.co').toString()}
+>
   <section>
     <Heading index="01" text="Our brands" />      
     <Line />

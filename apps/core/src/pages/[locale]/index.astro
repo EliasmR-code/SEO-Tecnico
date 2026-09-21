@@ -132,9 +132,30 @@ const query = `
 `;
 
 const { home, layout } = await queryCMS(query, { locale, fallbackLocale });
+const pageTitle = 'SEO técnico en Colombia | Auditoría y posicionamiento web';
+const pageDescription = 'SEO técnico en Colombia para mejorar rastreo, velocidad, arquitectura y posicionamiento web. Auditorías SEO y estrategia medible.';
+const canonicalUrl = new URL(`/${locale}`, Astro.site ?? 'https://seotecnico.co').toString();
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'SEO Técnico',
+  description: pageDescription,
+  url: canonicalUrl,
+  areaServed: ['Colombia', 'Bogotá', 'Medellín'],
+  serviceType: ['SEO técnico', 'Auditoría SEO', 'Posicionamiento web', 'SEO local'],
+  knowsAbout: ['SEO técnico', 'SEO on-page', 'Core Web Vitals', 'Google Search Console', 'Datos estructurados'],
+};
 ---
 
-<Layout additionalSeo={home._seoMetaTags} logos={[layout.logo, layout.logoDark]}>    
+<Layout
+  additionalSeo={home._seoMetaTags}
+  logos={[layout.logo, layout.logoDark]}
+  locale={locale}
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalUrl}
+  schema={pageSchema}
+>
   {
     home.sections.map((item: any) => {
       switch (item._modelApiKey) {
@@ -160,6 +181,50 @@ const { home, layout } = await queryCMS(query, { locale, fallbackLocale });
       }
     })
   }
+
+  <section id="servicios-seo" class="px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div>
+        <p class="text-xs uppercase mb-3">Servicios de SEO</p>
+        <h2 class="text-3xl">Una base técnica sólida para posicionar en Google</h2>
+      </div>
+      <div class="text-sm leading-7">
+        <p>Trabajo la parte técnica y estratégica que sostiene el posicionamiento SEO: diagnóstico, prioridades claras y mejoras que pueden medirse.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
+      <article class="border border-border p-5">
+        <h3 class="text-xl mb-2">Auditoría SEO técnica</h3>
+        <p class="text-sm leading-6">Revisión de rastreo, indexación, arquitectura, enlazado interno, etiquetas, errores y oportunidades de crecimiento.</p>
+      </article>
+      <article class="border border-border p-5">
+        <h3 class="text-xl mb-2">SEO on-page y arquitectura web</h3>
+        <p class="text-sm leading-6">Organización de URLs, títulos, encabezados, intención de búsqueda y contenidos para que cada página tenga una función.</p>
+      </article>
+      <article class="border border-border p-5">
+        <h3 class="text-xl mb-2">Velocidad y Core Web Vitals</h3>
+        <p class="text-sm leading-6">Optimización de imágenes, JavaScript, CSS y experiencia móvil para mejorar rendimiento y conversión.</p>
+      </article>
+      <article class="border border-border p-5">
+        <h3 class="text-xl mb-2">SEO local en Colombia</h3>
+        <p class="text-sm leading-6">Estrategia para búsquedas locales, páginas de servicio y señales que ayudan a destacar en Bogotá, Medellín y otras ciudades.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="px-4 pb-10">
+    <h2 class="text-2xl mb-4">Preguntas frecuentes sobre SEO técnico</h2>
+    <div class="space-y-4 text-sm leading-6">
+      <details class="border-b border-border pb-3">
+        <summary class="cursor-pointer font-semibold">¿Qué incluye una auditoría SEO?</summary>
+        <p class="pt-2">Incluye el análisis de rastreo, indexación, arquitectura, rendimiento, SEO on-page, enlazado interno y datos estructurados, con prioridades de implementación.</p>
+      </details>
+      <details class="border-b border-border pb-3">
+        <summary class="cursor-pointer font-semibold">¿El SEO técnico mejora el posicionamiento web?</summary>
+        <p class="pt-2">Sí. Una web técnicamente accesible permite que Google descubra, interprete y valore mejor sus páginas; debe combinarse con contenido útil y autoridad.</p>
+      </details>
+    </div>
+  </section>
 
   <DraftModeQueryListener query={query} />
 </Layout>

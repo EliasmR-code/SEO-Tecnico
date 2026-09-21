@@ -1,8 +1,14 @@
 ---
-const { images, width, height } = Astro.props;
----
-<img src={images.lightModeImage.url} alt={images.lightModeImage.alt} class={`select-none ${ images.darkModeImage ? "dark:hidden" : ""}`} width={width} height={height} />
+const { images, width, height } = Astro.props ?? {};
+const lightImage = images?.lightModeImage || images?.image || images;
+const darkImage = images?.darkModeImage;
 
-{images.darkModeImage && (
-  <img src={images.darkModeImage.url} alt={images.darkModeImage.alt} class="select-none hidden dark:block" width={width} height={height} />  
+if (!lightImage?.url) {
+  return null;
+}
+---
+<img src={lightImage.url} alt={lightImage.alt || 'Brand logo'} class={`select-none ${ darkImage ? "dark:hidden" : ""}`} width={width} height={height} />
+
+{darkImage && (
+  <img src={darkImage.url} alt={darkImage.alt || 'Brand logo'} class="select-none hidden dark:block" width={width} height={height} />
 )}

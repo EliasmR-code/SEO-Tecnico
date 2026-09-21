@@ -4,6 +4,7 @@ import vercel from '@astrojs/vercel'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://seotecnico.co',
   output: 'static',
   adapter: vercel(),
   vite: {
@@ -14,7 +15,7 @@ export default defineConfig({
     defaultLocale: 'en',
 
     routing: {
-      prefixDefaultLocale: true, // Ensures that your default locale is prefixed aswell
+      prefixDefaultLocale: true,
     },
   },
 })

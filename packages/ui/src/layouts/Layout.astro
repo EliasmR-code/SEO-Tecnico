@@ -3,7 +3,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Line from '../components/Line.astro'
 import queryCMS from '../lib/cms';
-import { Seo } from '@datocms/astro';
 
 const query = `
   query {
@@ -22,18 +21,67 @@ const query = `
 `;
 
 const { _site, theme } = await queryCMS(query);
-const { additionalSeo = [], logos, primaryColor } = Astro.props;
+const {
+  additionalSeo = [],
+  logos = [],
+  primaryColor,
+  title = 'SEO técnico en Colombia | Auditoría y posicionamiento web',
+  description = 'SEO técnico en Colombia para mejorar rastreo, velocidad, arquitectura y posicionamiento web.',
+  canonical,
+  ogImage,
+  locale,
+  lang,
+  schema,
+  alternateLinks = []
+} = Astro.props;
+
+const siteUrl = (Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://seotecnico.co');
+const resolvedLang = lang || locale || 'en';
+const resolvedCanonical = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+const resolvedOgImage = ogImage || `${siteUrl}/og-default.jpg`;
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: title,
+  description,
+  url: resolvedCanonical,
+  publisher: {
+    '@type': 'Organization',
+    name: 'SEO Técnico',
+    url: siteUrl,
+  },
+};
+const pageSchema = schema || defaultSchema;
 ---
 
-<html lang="en" class="dark">
+<html lang={resolvedLang} class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <Seo data={[..._site.faviconMetaTags, ...additionalSeo]} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content={primaryColor || '#0f172a'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <link rel="canonical" href={resolvedCanonical} />
+    {alternateLinks.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
+    {Array.isArray(additionalSeo) && additionalSeo.map((meta) => (
+      <meta {...meta.attributes} content={meta.content} />
+    ))}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono&family=Open+Sans&family=Poppins&family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
     <script is:inline src="/scripts/main.js"></script>
+    <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
   </head>
   <body
     style={
@@ -48,7 +96,7 @@ const { additionalSeo = [], logos, primaryColor } = Astro.props;
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
         </polygon>
       </symbol>
-    </svg>  
+    </svg>
     <div class="grid min-h-screen grid-rows-[auto_1fr_auto] grid-cols-[minmax(1em,1fr)_minmax(0,var(--outer-container-width))_minmax(1em,1fr)]">
       <Header logos={logos} />
       <main class="col-start-2 bg-background border-x border-border">

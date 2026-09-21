@@ -9,7 +9,6 @@ import ContactForm from '@multilaunch/ui/contact-form';
 import ContactFormVertical from '@multilaunch/ui/contact-form-vertical';
 import TestimonialCarousel from '@multilaunch/ui/testimonial-carousel';
 import PrimaryButton from '@multilaunch/ui/primary-button';
-import { StructuredText } from '@datocms/astro';
 
 import '../../styles/style.css';
 
@@ -160,9 +159,21 @@ const { layout, brand, contactForm } = await queryCMS(query, { slug: import.meta
 if (!brand) {
   return Astro.redirect('/404');
 }
+
+const pageTitle = `${brand.name} | ${brand.productType || 'Brand'}`;
+const pageDescription = brand.featuresSubtitle || `Discover ${brand.name}, a fast branded experience built with Astro for international growth.`;
+const canonicalUrl = new URL(`/${locale}`, Astro.site ?? 'https://seotecnico.co').toString();
 ---
 
-<Layout additionalSeo={brand._seoMetaTags} logos={[brand.brandLogo, brand.brandLogoDark]} primaryColor={brand.accentColor.hex}>
+<Layout
+  additionalSeo={brand._seoMetaTags}
+  logos={[brand.brandLogo, brand.brandLogoDark]}
+  primaryColor={brand.accentColor.hex}
+  locale={locale}
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalUrl}
+>
   <div>
     <section>
       <Heading index="01" text={brand.brandName} />      
@@ -174,9 +185,9 @@ if (!brand) {
             <h1 class="text-3xl break-words">{brand.name}</h1>
           </div>
           <div class="text-xs leading-5">
-            <StructuredText
-              data={brand.description}
-            />
+            {typeof brand.description === 'string'
+              ? brand.description
+              : brand.description?.value || brand.description?.text || ''}
           </div>
         </div>
         <div class="product-card bg-card aspect-640/330">

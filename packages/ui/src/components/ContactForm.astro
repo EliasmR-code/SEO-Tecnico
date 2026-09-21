@@ -1,6 +1,8 @@
 ---
 import ImageWithDarkMode from './ImageWithDarkMode.astro';
-const { form } = Astro.props;
+const { form } = Astro.props ?? {};
+const logos = Array.isArray(form?.logos) ? form.logos : [];
+const companyLogo = form?.companyLogo;
 ---
 <div class="p-3">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-2 p-6 bg-card">
@@ -9,7 +11,7 @@ const { form } = Astro.props;
       <div class="text-xs leading-4">{form.subtitle}</div>
       <div class="flex">
         <ul class="flex flex-wrap">          
-          {form.logos.map(logo => (
+          {logos.map(logo => (
             <li class="px-4 py-2 border border-border">
               <ImageWithDarkMode images={logo} width="48" />
             </li>
@@ -21,7 +23,7 @@ const { form } = Astro.props;
         <ul>
           <li>
             <a href="">
-              <ImageWithDarkMode images={form.companyLogo} width="60" height="17" />
+              {companyLogo && <ImageWithDarkMode images={companyLogo} width="60" height="17" />}
             </a>
           </li>
         </ul>            
